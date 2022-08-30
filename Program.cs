@@ -1,5 +1,6 @@
 ﻿
 
+using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 
@@ -7,10 +8,18 @@ namespace TelegramBot
 {
     internal class Program
     {
-        private static string token { get; set; } = "5793069579:AAEaD0Y2aPymYy7VZd3JwUwhL1wLIg7jGDs";
+        private static string token { get; set; } 
         private static TelegramBotClient Bot { get; set; }
+
         static void Main(string[] args)
         {
+            using (var sr = new StreamReader("Token.txt"))
+            {
+                while (sr.Peek() >= 0)
+                {
+                    token = sr.ReadLine();
+                }
+            }
             Bot = new TelegramBotClient(token);
 
             using var cts = new CancellationTokenSource();
